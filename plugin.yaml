@@ -3,7 +3,7 @@ plugins:
   cfy_rms:
     executor: central_deployment_agent
     package_name: cloudify-simple-rms-plugin
-    source: source
+    source: https://github.com/MichaelShn/cloudify-simple-rms-plugin/archive/master.zip
     package_version: '0.0.1'
 
 node_types:
