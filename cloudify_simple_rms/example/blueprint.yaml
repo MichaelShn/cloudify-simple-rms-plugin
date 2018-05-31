@@ -7,7 +7,7 @@ imports:
   - plugin:cloudify-utilities-plugin
 
 inputs:
-  resource:
+  resources:
     default:
       - allocation:
           allocated: False
@@ -35,4 +35,4 @@ node_templates:
           implementation: cfy_rms.cloudify_simple_rms.tasks.create
           inputs:
             resource_pool: { get_input: resource_pool }
-            resource: { get_input: resource }
+            resources: { get_input: resources }
