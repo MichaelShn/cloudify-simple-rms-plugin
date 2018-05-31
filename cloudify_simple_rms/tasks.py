@@ -13,19 +13,19 @@ def create(resource_pool,resources,  **kwargs):
 
 def allocate(resource_pool, **kwargs):
     resource_pool = json.loads(read_secret(resource_pool).value)
-    found_unalocated=False
+    found_unallocated=False
     for index in range(len(resource_pool)):
-        if resource_pool[index]['allocation']['alocated'] == False :
-            found_unalocated = True
-            resource_pool[index]['allocation']['alocated'] = True
+        if resource_pool[index]['allocation']['allocated'] == False :
+            found_unallocated = True
+            resource_pool[index]['allocation']['allocated'] = True
             resource_pool[index]['allocation']['node_instance'] = ''
-            ### to do add when an to who it was alocated
+            ### to do add when an to who it was allocated
             allocated_resource=resource_pool[index]['resource']
             break
 
     ## Error if not found
-    if found_unalocated == False:
-        found_unalocated = False
+    if found_unallocated == False:
+        found_unallocated = False
 
     else:
         write_secret(resource_pool, json.dumps(resource_pool))
@@ -33,7 +33,7 @@ def allocate(resource_pool, **kwargs):
 
 
 def release(resource_pool_name, **kwargs):
-    found_unalocated = False
+    found_unallocated = False
     ## TODO write function
 
 
