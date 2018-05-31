@@ -12,7 +12,7 @@ def create(resource_pool,resources,  **kwargs):
 
 
 def allocate(resource_pool, **kwargs):
-    resource_pool = json.loads(read_secret(resource_pool))
+    resource_pool = json.loads(read_secret(resource_pool).value)
     found_unalocated=False
     for index in range(len(resource_pool)):
         if resource_pool[index]['allocation']['alocated'] == False :
