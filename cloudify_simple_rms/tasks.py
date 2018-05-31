@@ -8,7 +8,7 @@ import json
 
 
 def create(resource_pool,resources,  **kwargs):
-    write_secret(resource_pool, resources)
+    write_secret(resource_pool, json.dumps(resources))
 
 
 def allocate(resource_pool, **kwargs):
