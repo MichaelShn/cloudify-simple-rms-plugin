@@ -7,7 +7,7 @@ from cloudify import manager
 import json
 
 
-def create(resource_pool,resources):
+def create(resource_pool,resources, , **kwargs):
     write_secret(resource_pool, resources)
 
 
@@ -31,7 +31,7 @@ def allocate(resource_pool, **kwargs):
         ctx.instance.runtime_properties.update(allocated_resource)
 
 
-def release(resource_pool_name):
+def release(resource_pool_name, **kwargs):
     found_unalocated = False
     ## TODO write function
 
