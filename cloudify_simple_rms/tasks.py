@@ -12,15 +12,15 @@ def create(resource_pool,resources,  **kwargs):
 
 
 def allocate(resource_pool, **kwargs):
-    resource_pool = json.loads(read_secret(resource_pool).value)
+    resource_pool_list = json.loads(read_secret(resource_pool).value)
     found_unallocated=False
     for index in range(len(resource_pool)):
-        if resource_pool[index]['allocation']['allocated'] == False :
+        if resource_pool_list[index]['allocation']['allocated'] == False :
             found_unallocated = True
-            resource_pool[index]['allocation']['allocated'] = True
-            resource_pool[index]['allocation']['node_instance'] = ''
+            resource_pool_list[index]['allocation']['allocated'] = True
+            resource_pool_list[index]['allocation']['node_instance'] = ''
             ### to do add when an to who it was allocated
-            allocated_resource=resource_pool[index]['resource']
+            allocated_resource=resource_pool_list[index]['resource']
             break
 
     ## Error if not found
@@ -28,8 +28,9 @@ def allocate(resource_pool, **kwargs):
         found_unallocated = False
 
     else:
-        write_secret(resource_pool, json.dumps(resource_pool))
         ctx.instance.runtime_properties.update(allocated_resource)
+        write_secret(resource_pool, json.dumps(resource_pool_list))
+
 
 
 def release(resource_pool_name, **kwargs):
