@@ -7,7 +7,7 @@ from cloudify import manager
 import json
 
 
-def create(resource_pool,resources, , **kwargs):
+def create(resource_pool,resources,  **kwargs):
     write_secret(resource_pool, resources)
 
 
