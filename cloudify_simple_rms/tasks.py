@@ -31,11 +31,13 @@ def allocate(resource_pool, **kwargs):
         ctx.instance.runtime_properties.update(allocated_resource)
 
 
-def release():
+def release(resource_pool_name):
+    found_unalocated = False
+    ## TODO write function
 
 
 
-def read_secret():
+def read_secret(secret_key):
     cfy_client = manager.get_rest_client(secret_key)
     return cfy_client.secrets.get(key=secret_key)
 
