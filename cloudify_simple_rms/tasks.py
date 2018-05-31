@@ -23,12 +23,12 @@ def allocate(resource_pool, **kwargs):
             break
 
     ## Error if not found
-    if found_unalocated == false:
+    if found_unalocated == False:
+        found_unalocated = False
 
-    ## Write back the resource default_pool
-    write_secret(resource_pool_name, resource_pool)
-    ## Write resource in to runtime properties
-    ctx.instance.runtime_properties.update(allocated_resource)
+    else:
+        write_secret(resource_pool_name, resource_pool)
+        ctx.instance.runtime_properties.update(allocated_resource)
 
 
 def release():
