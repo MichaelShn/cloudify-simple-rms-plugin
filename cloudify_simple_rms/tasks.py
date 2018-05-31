@@ -39,7 +39,7 @@ def release(resource_pool_name, **kwargs):
 
 
 def read_secret(secret_key):
-    cfy_client = manager.get_rest_client(secret_key)
+    cfy_client = manager.get_rest_client()
     return cfy_client.secrets.get(key=secret_key)
 
 
