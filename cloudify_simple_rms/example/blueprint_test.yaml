@@ -7,25 +7,18 @@ imports:
   - plugin:cloudify-utilities-plugin
 
 inputs:
-  resources:
-    default:
-      - allocation:
-          allocated: False
-        resource:
-          name: Dani
-      - allocation:
-          allocated: False
-        resource:
-          name: David
-      - allocation:
-          allocated: False
-        resource:
-          name: Alex
+
 
   resource_pool:
     default: default_pool
 
 
 node_templates:
-  resource_pool:
+  object:
     type: cloudify.rms.node
+    properties:
+      resource_pool: { get_input : resource_pool }
+
+outputs:
+  allocated_resource:
+    value: { get_attribute : [object , name ] }
