@@ -12,7 +12,7 @@ def create(resource_pool,resources,  **kwargs):
 
 
 def allocate(resource_pool, **kwargs):
-    resource_pool = read_secret(resource_pool_name)
+    resource_pool = json.loads(read_secret(resource_pool_name))
     found_unalocated=False
     for index in range(len(resource_pool)):
         if resource_pool[index]['allocation']['alocated'] == False :
@@ -27,7 +27,7 @@ def allocate(resource_pool, **kwargs):
         found_unalocated = False
 
     else:
-        write_secret(resource_pool_name, resource_pool)
+        write_secret(resource_pool_name, json.dumps(resource_pool))
         ctx.instance.runtime_properties.update(allocated_resource)
 
 
