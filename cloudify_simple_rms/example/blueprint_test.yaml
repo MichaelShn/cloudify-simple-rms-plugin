@@ -1,0 +1,31 @@
+tosca_definitions_version: cloudify_dsl_1_3
+
+imports:
+  - http://www.getcloudify.org/spec/cloudify/4.3/types.yaml
+  - https://raw.githubusercontent.com/MichaelShn/cloudify-simple-rms-plugin/master/plugin.yaml
+  - plugin:cloudify-openstack-plugin
+  - plugin:cloudify-utilities-plugin
+
+inputs:
+  resources:
+    default:
+      - allocation:
+          allocated: False
+        resource:
+          name: Dani
+      - allocation:
+          allocated: False
+        resource:
+          name: David
+      - allocation:
+          allocated: False
+        resource:
+          name: Alex
+
+  resource_pool:
+    default: default_pool
+
+
+node_templates:
+  resource_pool:
+    type: cloudify.rms.node

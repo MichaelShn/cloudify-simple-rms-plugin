@@ -8,7 +8,7 @@ import json
 
 
 def create(resource_pool,resources,  **kwargs):
-    write_secret(resource_pool, json.dumps(resources))
+    create_secret(resource_pool, json.dumps(resources))
 
 
 def allocate(resource_pool, **kwargs):
@@ -43,5 +43,9 @@ def read_secret(secret_key):
 
 
 def write_secret(secret_key, secret_value):
+    cfy_client = manager.get_rest_client()
+    return cfy_client.secrets.update(key=secret_key, value=secret_value)
+
+def create_secret(secret_key, secret_value):
     cfy_client = manager.get_rest_client()
     return cfy_client.secrets.create(key=secret_key, value=secret_value)
