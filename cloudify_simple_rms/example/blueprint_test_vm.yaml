@@ -1,0 +1,78 @@
+tosca_definitions_version: cloudify_dsl_1_3
+
+imports:
+  - http://www.getcloudify.org/spec/cloudify/4.3/types.yaml
+  - https://raw.githubusercontent.com/MichaelShn/cloudify-simple-rms-plugin/master/plugin.yaml
+  - plugin:cloudify-utilities-plugin
+  - plugin:cloudify-openstack-plugin
+
+inputs:
+
+  resource_pool:
+    default: default_pool
+
+  server_name:
+    type: string
+    default: server
+
+  server_image:
+    type: string
+    default: { get_secret: centos_core_image }
+
+  server_flavor:
+    type: string
+    default: { get_secret: small_image_flavor  }
+
+
+
+node_templates:
+  object:
+    type: cloudify.rms.node
+    properties:
+      resource_pool: { get_input : resource_pool }
+
+  server_host:
+    type:  cloudify.openstack.nodes.Server
+    properties:
+      resource_id:  { get_attribute : [ object , name] }
+      image: { get_input: server_image }
+      flavor:  { get_input: server_flavor }
+      management_network_name:  { get_secret: private_network_name }
+      openstack_config:
+        username: { get_secret: keystone_username }
+        password: { get_secret: keystone_password }
+        tenant_name: none
+        auth_url: { get_secret: keystone_url }
+        region: { get_secret: region }
+      agent_config:
+        install_method: none
+    interfaces:
+      cloudify.interfaces.lifecycle:
+        create:
+#         implementation: openstack.nova_plugin.server.create
+          inputs:
+            openstack_config: &openstack_config
+              username: { get_secret: keystone_username }
+              password: { get_secret: keystone_password }
+              tenant_name: { get_attribute : [ object , name] }
+              auth_url: { get_secret: keystone_url }
+              region: { get_secret: region }
+        start:
+          inputs:
+            openstack_config: *openstack_config
+        stop:
+          inputs:
+            openstack_config: *openstack_config
+        delete:
+          inputs:
+            openstack_config: *openstack_config
+
+    relationships:
+      - target: object
+        type: cloudify.relationships.depends_on
+
+
+
+outputs:
+  allocated_resource:
+    value: { get_attribute : [object , name ] }

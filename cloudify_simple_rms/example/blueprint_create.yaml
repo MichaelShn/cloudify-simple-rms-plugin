@@ -12,15 +12,15 @@ inputs:
       - allocation:
           allocated: False
         resource:
-          name: Dani
+          name: dani
       - allocation:
           allocated: False
         resource:
-          name: David
+          name: david
       - allocation:
           allocated: False
         resource:
-          name: Alex
+          name: alex
 
   resource_pool:
     default: default_pool
