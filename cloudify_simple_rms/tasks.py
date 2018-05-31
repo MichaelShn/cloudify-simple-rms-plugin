@@ -7,6 +7,9 @@ from cloudify import manager
 import json
 
 
+def create(resource_pool,resources):
+    write_secret(resource_pool, resources)
+
 
 def allocate(resource_pool, **kwargs):
     resource_pool = read_secret(resource_pool_name)
