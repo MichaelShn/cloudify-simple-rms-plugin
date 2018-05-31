@@ -14,14 +14,15 @@ node_types:
       resource_pool:
         default: default_pool
     interfaces:
-      create:
-        implementation: cfy_rms.cloudify_simple_rms.tasks.allocate
-        inputs:
-          resource_pool:
-            default: { get_property : [SELF, resource_pool ] }
+      cloudify.interfaces.lifecycle:
+        create:
+          implementation: cfy_rms.cloudify_simple_rms.tasks.allocate
+          inputs:
+            resource_pool:
+              default: { get_property : [SELF, resource_pool ] }
 
-      delete:
-        implementation: cfy_rms.cloudify_simple_rms.tasks.release
-        inputs:
-          resource_pool:
-            default: { get_property : [SELF, resource_pool ] }
+        delete:
+          implementation: cfy_rms.cloudify_simple_rms.tasks.release
+          inputs:
+            resource_pool:
+              default: { get_property : [SELF, resource_pool ] }
